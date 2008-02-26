@@ -1,0 +1,142 @@
+<project name="Object Prevalence" default="compile-all" basedir=".">
+
+	<property name="site" value="prevaylor-example" />
+
+	<property file="build.properties" />
+
+	<property name="lib.dir" location="lib" />
+	<property file="${lib.dir}/lib.properties" />
+
+	<property name="docs.dir" location="docs" />
+
+	<property name="base.dir" value="." />
+	<property name="src.dir" value="src" />
+	<property name="src.main.dir" value="${src.dir}/main" />
+	<property name="src.test.dir" value="${src.dir}/test" />
+	<property name="conf.dir" value="conf" />
+	<property name="build.dir" value="build" />
+	<property name="build.main.dir" value="${build.dir}/main" />
+	<property name="build.test.dir" value="${build.dir}/test" />
+	<property name="dist.dir" value="dist" />
+	<property name="lib.dir" value="lib" />
+
+	<path id="commons-logging.classpath">
+		<fileset dir="${commons-logging.dir}" includes="*.jar" />
+	</path>
+
+	<path id="javamatch.classpath">
+		<fileset dir="${javamatch.dir}" includes="*.jar" />
+	</path>
+
+	<path id="junit.classpath">
+		<fileset dir="${junit.dir}" includes="*.jar" />
+	</path>
+
+	<path id="log4j.classpath">
+		<fileset dir="${log4j.dir}" includes="*.jar" />
+	</path>
+
+	<path id="prevayler.classpath">
+		<fileset dir="${prevayler.dir}" includes="*.jar" />
+	</path>
+
+	<path id="skaringa.classpath">
+		<fileset dir="${skaringa.dir}" includes="*.jar" />
+	</path>
+
+	<path id="xpps_min.classpath">
+		<fileset dir="${xpps_min.dir}" includes="*.jar" />
+	</path>
+
+	<path id="xstream.classpath">
+		<fileset dir="${xstream.dir}" includes="*.jar" />
+	</path>
+
+	<path id="main.classpath">
+		<path refid="commons-logging.classpath" />
+		<path refid="javamatch.classpath" />
+		<path refid="log4j.classpath" />
+		<path refid="prevayler.classpath" />
+		<path refid="skaringa.classpath" />
+		<path refid="xpp3_min.classpath" />
+		<path refid="xstream.classpath" />
+		<pathelement path="${build.main.dir}" />
+	</path>
+
+	<path id="test.classpath">
+		<path refid="main.classpath" />
+		<path refid="junit.classpath" />
+		<pathelement path="${build.test.dir}" />
+		<pathelement path="${conf.dir}" />
+	</path>
+
+	<target name="prepare">
+		<tstamp />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.main.dir}" />
+		<mkdir dir="${build.test.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="compile-all" depends="prepare">
+		<javac destdir="${build.main.dir}" deprecation="on" debug="true">
+			<classpath refid="main.classpath" />
+			<src path="${src.main.dir}" />
+		</javac>
+		<javac destdir="${build.test.dir}" deprecation="on" debug="true">
+			<classpath refid="test.classpath" />
+			<src path="${src.test.dir}" />
+		</javac>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+    <target name="run-example" depends="compile-all">
+    	<run-main class="com.beckproduct.prevayler.Main"/>
+    </target>		
+
+	<macrodef name="run-main">
+		<attribute name="spawn" default="no" />
+		<sequential>
+			<echo>Running @{class}...</echo>
+			<java classname="@{class}" fork="true" spawn="@{spawn}">
+				<jvmarg value="-server" />
+				<jvmarg value="-mx512m" />
+				<classpath>
+					<path refid="main.classpath" />
+					<pathelement location="${build.main.dir}" />
+				</classpath>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="run-tests" depends="compile-all">
+		<delete dir="${docs.dir}" />
+		<mkdir dir="${docs.dir}" />
+		<junit printsummary="yes" haltonfailure="no">
+			<classpath refid="test.classpath" />
+			<formatter type="plain" />
+			<batchtest fork="yes" todir="${docs.dir}">
+				<formatter type="xml" />
+				<fileset dir="${src.test.dir}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${docs.dir}">
+			<fileset dir="${docs.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${docs.dir}" />
+		</junitreport>
+		<delete>
+			<fileset dir="./">
+				<include name="junit*.properties" />
+			</fileset>
+		</delete>
+	</target>
+</project>
+
