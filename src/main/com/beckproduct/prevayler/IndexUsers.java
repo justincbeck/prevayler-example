@@ -28,6 +28,8 @@ public class IndexUsers
             results.close();
             stmt.close();
             conn.close();
+
+            list();
         }
         catch (Exception e)
         {
@@ -48,6 +50,12 @@ public class IndexUsers
         }
         UserDAO userDAO = new UserDAO();
         userDAO.save(userList);
+    }
+    
+    private void list()
+    {
+        UserDAO userDAO = new UserDAO();
+        userDAO.list();
     }
 
     public static void main(String[] args)
