@@ -20,8 +20,16 @@
 	<property name="dist.dir" value="dist" />
 	<property name="lib.dir" value="lib" />
 
+	<path id="commons-collections.classpath">
+		<fileset dir="${commons-collections.dir}" includes="*.jar" />
+	</path>
+
 	<path id="commons-logging.classpath">
 		<fileset dir="${commons-logging.dir}" includes="*.jar" />
+	</path>
+
+	<path id="csvjdbc.classpath">
+		<fileset dir="${csvjdbc.dir}" includes="*.jar" />
 	</path>
 
 	<path id="javamatch.classpath">
@@ -44,8 +52,8 @@
 		<fileset dir="${skaringa.dir}" includes="*.jar" />
 	</path>
 
-	<path id="xpps_min.classpath">
-		<fileset dir="${xpps_min.dir}" includes="*.jar" />
+	<path id="xpp3_min.classpath">
+		<fileset dir="${xpp3_min.dir}" includes="*.jar" />
 	</path>
 
 	<path id="xstream.classpath">
@@ -53,7 +61,9 @@
 	</path>
 
 	<path id="main.classpath">
+		<path refid="commons-collections.classpath" />
 		<path refid="commons-logging.classpath" />
+		<path refid="csvjdbc.classpath" />
 		<path refid="javamatch.classpath" />
 		<path refid="log4j.classpath" />
 		<path refid="prevayler.classpath" />
@@ -94,24 +104,12 @@
 		<delete dir="${dist.dir}" />
 	</target>
 
-    <target name="run-example" depends="compile-all">
-    	<run-main class="com.beckproduct.prevayler.Main"/>
-    </target>		
-
-	<macrodef name="run-main">
-		<attribute name="spawn" default="no" />
-		<sequential>
-			<echo>Running @{class}...</echo>
-			<java classname="@{class}" fork="true" spawn="@{spawn}">
-				<jvmarg value="-server" />
-				<jvmarg value="-mx512m" />
-				<classpath>
-					<path refid="main.classpath" />
-					<pathelement location="${build.main.dir}" />
-				</classpath>
-			</java>
-		</sequential>
-	</macrodef>
+	<target name="run-example" depends="compile-all">
+		<java classname="com.beckproduct.prevayler.IndexUsers">
+			<arg value="conf" />
+			<classpath refid="main.classpath" />
+		</java>
+	</target>
 
 	<target name="run-tests" depends="compile-all">
 		<delete dir="${docs.dir}" />
