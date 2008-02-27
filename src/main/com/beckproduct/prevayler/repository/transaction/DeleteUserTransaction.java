@@ -1,4 +1,4 @@
-package com.beckproduct.prevayler.transaction;
+package com.beckproduct.prevayler.repository.transaction;
 
 import java.util.Date;
 
@@ -20,6 +20,6 @@ public class DeleteUserTransaction implements Transaction
     public void executeOn(Object prevalentSystem, Date executionTime)
     {
         UserList system = (UserList) prevalentSystem;
-        system.remove(userName);
+        system.deleteByUsername(userName);
     }
 }

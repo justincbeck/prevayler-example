@@ -1,28 +1,28 @@
-package com.beckproduct.prevayler.transaction;
+package com.beckproduct.prevayler.repository.transaction;
 
 import java.util.Date;
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.prevayler.TransactionWithQuery;
 
+import com.beckproduct.prevayler.domain.User;
 import com.beckproduct.prevayler.domain.UserList;
 
-public class SaveUserTransaction implements TransactionWithQuery
+public class UpdateUserTransaction implements TransactionWithQuery
 {
     private static final long serialVersionUID = 1l;
+    
+    private User user;
 
-    private final ListOrderedMap users;
-
-    public SaveUserTransaction(ListOrderedMap users)
+    public UpdateUserTransaction(User user)
     {
-        this.users = users;
+        this.user = user;
     }
 
     public Object executeAndQuery(Object prevalentSystem, Date executionTime) throws Exception
     {
         UserList system = (UserList) prevalentSystem;
-        system.save(users);
-
-        return users;
+        system.update(user);
+        
+        return user;
     }
 }

@@ -1,98 +1,53 @@
 package com.beckproduct.prevayler.repository;
 
-import java.io.IOException;
-
 import org.apache.commons.collections.map.ListOrderedMap;
 import org.prevayler.Prevayler;
 import org.prevayler.PrevaylerFactory;
 
+import com.beckproduct.prevayler.domain.User;
 import com.beckproduct.prevayler.domain.UserList;
-import com.beckproduct.prevayler.transaction.DeleteUserTransaction;
-import com.beckproduct.prevayler.transaction.SaveUserTransaction;
+import com.beckproduct.prevayler.repository.transaction.DeleteUserTransaction;
+import com.beckproduct.prevayler.repository.transaction.ReadUserTransaction;
+import com.beckproduct.prevayler.repository.transaction.SaveUserTransaction;
+import com.beckproduct.prevayler.repository.transaction.SaveUsersTransaction;
+import com.beckproduct.prevayler.repository.transaction.UpdateUserTransaction;
 
 public class UserRepository
 {
     private Prevayler prevayler;
-    
-    private UserList list;
 
-    public UserRepository()
+    public UserRepository() throws Exception
     {
-        try
-        {
-            prevayler = PrevaylerFactory.createPrevayler(new UserList(), "conf/journal");
-            list = (UserList) prevayler.prevalentSystem();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
+        prevayler = PrevaylerFactory.createPrevayler(new UserList(), "conf/journal");
     }
 
-    public void save(ListOrderedMap users)
+    public void create(ListOrderedMap users) throws Exception
     {
-        try
-        {
-            prevayler.execute(new SaveUserTransaction(users));
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        prevayler.execute(new SaveUsersTransaction(users));
     }
 
-    public void delete(String userName)
+    public void create(User user) throws Exception
     {
-        try
-        {
-            prevayler.execute(new DeleteUserTransaction(userName));
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        prevayler.execute(new SaveUserTransaction(user));
     }
 
-    public void list()
+    public User read(String username) throws Exception
     {
-        UserList list = (UserList) prevayler.prevalentSystem();
-        list.print();
-        System.out.println("Listing generated through DAO");
+        return (User) prevayler.execute(new ReadUserTransaction(username));
     }
 
-    public String getNext()
+    public void update(User user) throws Exception
     {
-        UserList list = (UserList) prevayler.prevalentSystem();
-        ListOrderedMap listOrderedMap = list.getUsers();
-        if (!listOrderedMap.isEmpty())
-            return (String) listOrderedMap.get(0);
-
-        return null;
+        prevayler.execute(new UpdateUserTransaction(user));
     }
 
-    public ListOrderedMap retrieve()
+    public void delete(String userName) throws Exception
     {
-        UserList list = (UserList) prevayler.prevalentSystem();
-        return list.getUsers();
+        prevayler.execute(new DeleteUserTransaction(userName));
     }
 
-    /**
-     * @return the list
-     */
-    public UserList getList()
+    public UserList list()
     {
-        return list;
-    }
-
-    /**
-     * @param list the list to set
-     */
-    public void setList(UserList list)
-    {
-        this.list = list;
+        return (UserList) prevayler.prevalentSystem();
     }
 }
