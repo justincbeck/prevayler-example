@@ -8,6 +8,7 @@
 	<property file="${lib.dir}/lib.properties" />
 
 	<property name="docs.dir" location="docs" />
+	<property name="docs.test.dir" location="${docs.dir}/test" />
 
 	<property name="base.dir" value="." />
 	<property name="src.dir" value="src" />
@@ -108,26 +109,27 @@
 		<delete dir="${build.dir}" />
 		<delete dir="${dist.dir}" />
 		<delete dir="${conf.dir}/journal" />
+		<delete dir="${docs.test.dir}" />
 	</target>
 
 	<target name="run-tests" depends="compile-all">
-		<delete dir="${docs.dir}" />
-		<mkdir dir="${docs.dir}" />
+		<delete dir="${docs.test.dir}" />
+		<mkdir dir="${docs.test.dir}" />
 		<junit printsummary="yes" haltonfailure="no">
 			<classpath refid="test.classpath" />
 			<formatter type="plain" />
-			<batchtest fork="yes" todir="${docs.dir}">
+			<batchtest fork="yes" todir="${docs.test.dir}">
 				<formatter type="xml" />
 				<fileset dir="${src.test.dir}">
 					<include name="**/*Test.java" />
 				</fileset>
 			</batchtest>
 		</junit>
-		<junitreport todir="${docs.dir}">
-			<fileset dir="${docs.dir}">
+		<junitreport todir="${docs.test.dir}">
+			<fileset dir="${docs.test.dir}">
 				<include name="TEST-*.xml" />
 			</fileset>
-			<report format="frames" todir="${docs.dir}" />
+			<report format="frames" todir="${docs.test.dir}" />
 		</junitreport>
 		<delete>
 			<fileset dir="./">
