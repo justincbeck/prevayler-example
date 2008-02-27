@@ -1,4 +1,4 @@
-package com.beckproduct.prevayler;
+package com.beckproduct.prevayler.domain;
 
 import java.io.Serializable;
 

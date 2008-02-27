@@ -7,6 +7,8 @@ import java.sql.Statement;
 
 import org.apache.commons.collections.map.ListOrderedMap;
 
+import com.beckproduct.prevayler.repository.UserRepository;
+
 public class IndexUsers
 {
 
@@ -48,14 +50,14 @@ public class IndexUsers
             System.out.println("EBK_USERNAME= " + userName);
             userList.put(userName, "Y");
         }
-        UserDAO userDAO = new UserDAO();
-        userDAO.save(userList);
+        UserRepository userRepository = new UserRepository();
+        userRepository.save(userList);
     }
     
     private void list()
     {
-        UserDAO userDAO = new UserDAO();
-        userDAO.list();
+        UserRepository userRepository = new UserRepository();
+        userRepository.list();
     }
 
     public static void main(String[] args)

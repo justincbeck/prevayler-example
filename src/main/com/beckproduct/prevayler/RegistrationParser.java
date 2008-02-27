@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import com.beckproduct.prevayler.repository.UserRepository;
+
 
 public class RegistrationParser
 {
@@ -31,7 +33,7 @@ public class RegistrationParser
                 password = results.getString("EBK_PASSWORD");
                 System.out.println("EBK_USERNAME= " + userName + " EBK_PASSWORD= " + password);
             }
-            // clean up
+
             results.close();
             stmt.close();
             conn.close();
@@ -50,12 +52,12 @@ public class RegistrationParser
 
     private String findIndex()
     {
-        UserDAO userDAO = new UserDAO();
-        userDAO.list();
-        String index = userDAO.getNext();
-        userDAO.delete(index);
+        UserRepository userRepository = new UserRepository();
+        userRepository.list();
+        String index = userRepository.getNext();
+        userRepository.delete(index);
         System.out.println("AFTER UPDATE - HERE IS THE LIST : ");
-        userDAO.list();
+        userRepository.list();
 
         return index;
     }

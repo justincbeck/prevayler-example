@@ -1,4 +1,4 @@
-package com.beckproduct.prevayler;
+package com.beckproduct.prevayler.repository;
 
 import java.io.IOException;
 
@@ -6,13 +6,17 @@ import org.apache.commons.collections.map.ListOrderedMap;
 import org.prevayler.Prevayler;
 import org.prevayler.PrevaylerFactory;
 
-public class UserDAO
+import com.beckproduct.prevayler.domain.UserList;
+import com.beckproduct.prevayler.transaction.DeleteUserTransaction;
+import com.beckproduct.prevayler.transaction.SaveUserTransaction;
+
+public class UserRepository
 {
     private Prevayler prevayler;
     
     private UserList list;
 
-    public UserDAO()
+    public UserRepository()
     {
         try
         {

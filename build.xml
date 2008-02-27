@@ -104,8 +104,15 @@
 		<delete dir="${dist.dir}" />
 	</target>
 
-	<target name="run-example" depends="compile-all">
+	<target name="index-users" depends="compile-all">
 		<java classname="com.beckproduct.prevayler.IndexUsers">
+			<arg value="conf" />
+			<classpath refid="main.classpath" />
+		</java>
+	</target>
+
+	<target name="registration-parser" depends="compile-all">
+		<java classname="com.beckproduct.prevayler.RegistrationParser">
 			<arg value="conf" />
 			<classpath refid="main.classpath" />
 		</java>

@@ -1,8 +1,10 @@
-package com.beckproduct.prevayler;
+package com.beckproduct.prevayler.transaction;
 
 import java.util.Date;
 
 import org.prevayler.TransactionWithQuery;
+
+import com.beckproduct.prevayler.domain.UserList;
 
 public class ListUserTransaction implements TransactionWithQuery
 {
