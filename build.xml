@@ -52,6 +52,10 @@
 		<fileset dir="${skaringa.dir}" includes="*.jar" />
 	</path>
 
+	<path id="spring.classpath">
+		<fileset dir="${spring.dir}" includes="*.jar" />
+	</path>
+
 	<path id="xpp3_min.classpath">
 		<fileset dir="${xpp3_min.dir}" includes="*.jar" />
 	</path>
@@ -68,6 +72,7 @@
 		<path refid="log4j.classpath" />
 		<path refid="prevayler.classpath" />
 		<path refid="skaringa.classpath" />
+		<path refid="spring.classpath" />
 		<path refid="xpp3_min.classpath" />
 		<path refid="xstream.classpath" />
 		<pathelement path="${build.main.dir}" />
@@ -103,20 +108,6 @@
 		<delete dir="${build.dir}" />
 		<delete dir="${dist.dir}" />
 		<delete dir="${conf.dir}/journal" />
-	</target>
-
-	<target name="index-users" depends="compile-all">
-		<java classname="com.beckproduct.prevayler.IndexUsers">
-			<arg value="conf" />
-			<classpath refid="main.classpath" />
-		</java>
-	</target>
-
-	<target name="registration-parser" depends="compile-all">
-		<java classname="com.beckproduct.prevayler.RegistrationParser">
-			<arg value="conf" />
-			<classpath refid="main.classpath" />
-		</java>
 	</target>
 
 	<target name="run-tests" depends="compile-all">

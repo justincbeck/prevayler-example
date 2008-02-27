@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -105,5 +106,11 @@ public class UserRepositoryTest
     public void testDelete() throws Exception
     {
         repository.delete("jbeck");
+    }
+
+    @After
+    public void cleanUp()
+    {
+        // Do Nothing
     }
 }
