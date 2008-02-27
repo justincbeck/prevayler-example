@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>org.relique.jdbc.csv.CsvDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:relique:csv:conf</value>
+		</property>
+	</bean>
+</beans>
