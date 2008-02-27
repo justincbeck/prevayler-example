@@ -102,6 +102,7 @@
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<delete dir="${dist.dir}" />
+		<delete dir="${conf.dir}/journal" />
 	</target>
 
 	<target name="index-users" depends="compile-all">
