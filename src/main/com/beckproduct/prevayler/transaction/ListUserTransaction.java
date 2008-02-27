@@ -9,7 +9,7 @@ import com.beckproduct.prevayler.domain.UserList;
 public class ListUserTransaction implements TransactionWithQuery
 {
     private static final long serialVersionUID = 1l;
-    
+
     public ListUserTransaction()
     {
     }

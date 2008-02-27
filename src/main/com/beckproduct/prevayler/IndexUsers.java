@@ -11,11 +11,6 @@ import com.beckproduct.prevayler.repository.UserRepository;
 
 public class IndexUsers
 {
-
-    public IndexUsers()
-    {
-    }
-
     public void run(String fileName)
     {
         try
@@ -53,7 +48,7 @@ public class IndexUsers
         UserRepository userRepository = new UserRepository();
         userRepository.save(userList);
     }
-    
+
     private void list()
     {
         UserRepository userRepository = new UserRepository();

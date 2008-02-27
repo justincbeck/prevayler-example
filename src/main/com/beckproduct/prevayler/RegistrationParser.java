@@ -7,7 +7,6 @@ import java.sql.Statement;
 
 import com.beckproduct.prevayler.repository.UserRepository;
 
-
 public class RegistrationParser
 {
     private String userName;
