@@ -51,7 +51,7 @@ public class UserRepositoryTest
     }
 
     @Test
-    public void testCreateAll() throws Exception
+    public void testImport() throws Exception
     {
         String username;
         String password;
@@ -71,7 +71,7 @@ public class UserRepositoryTest
 
         repository.create(userList);
     }
-
+    
     @Test
     public void testCreate() throws Exception
     {
@@ -80,6 +80,10 @@ public class UserRepositoryTest
         user.setPassword("password");
 
         repository.create(user);
+        
+        user = repository.read("name");
+        
+        Assert.assertNotNull(user);
     }
 
     @Test
@@ -99,13 +103,24 @@ public class UserRepositoryTest
     @Test
     public void testUpdate() throws Exception
     {
-
+        User user = repository.read("jbeck");
+        
+        user.setPassword("drowssap");
+        repository.update(user);
+        
+        user = repository.read("jbeck");
+        
+        Assert.assertTrue(user.getPassword().equals("drowssap"));
     }
 
     @Test
     public void testDelete() throws Exception
     {
         repository.delete("jbeck");
+        
+        User user = repository.read("jbeck");
+        
+        Assert.assertNull(user);
     }
 
     @After
