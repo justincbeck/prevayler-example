@@ -2,4 +2,5 @@ build
 conf/journal
 docs
 prevayler-example.i*
+.idea
 
